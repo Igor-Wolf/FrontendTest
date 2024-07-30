@@ -7,17 +7,30 @@
     <h1>Bem-vindo à minha Landing Page!</h1>
     <p>Acesse nosso conteúdo incrível.</p>
     <script>
+        // Captura a origem do visitante
         const referrer = document.referrer || 'Desconhecido';
-        visitorSource = referrer
+
+        // Armazena a origem no sessionStorage
+        sessionStorage.setItem('visitorSource', referrer);
+
+        // Recupera a origem do sessionStorage
+        const visitorSource = sessionStorage.getItem('visitorSource');
+
+        // Envia a origem para o backend
         fetch('https://backend-test-sable.vercel.app/api/count', {
-        method: 'GET',
-        headers: {
-        'Content-Type': 'application/json',
-        'X-Visitor-Source': visitorSource // Adiciona o parâmetro ao cabeçalho
-    }
-})
-            .then(response => response.json())
-            .then(data => console.log('Total de acessos:', data.accessList ));
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Visitor-Source': visitorSource // Adiciona o parâmetro ao cabeçalho
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Total de acessos:', data.accessList);
+            // Limpa a origem no sessionStorage após enviar para o backend
+            sessionStorage.removeItem('visitorSource');
+        })
+        .catch(error => console.error('Erro:', error));
     </script>
 </body>
 </html>
