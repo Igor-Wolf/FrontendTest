@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minha Landing Page</title>
+</head>
+<body>
+    <h1>Bem-vindo à minha Landing Page!</h1>
+    <p>Acesse nosso conteúdo incrível.</p>
+    <script>
+        fetch('https://backend-test-sable.vercel.app/api/count')
+            .then(response => response.json())
+            .then(data => console.log('Total de acessos:', data.accessCount));
+    </script>
+</body>
+</html>
