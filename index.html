@@ -7,14 +7,36 @@
     <h1>Bem-vindo à minha Landing Page!</h1>
     <p>Acesse nosso conteúdo incrível.</p>
     <script>
+        // Função para definir um cookie
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        // Função para obter um cookie pelo nome
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
         // Captura a origem do visitante
         const referrer = document.referrer || 'Desconhecido';
 
-        // Armazena a origem no sessionStorage
-        sessionStorage.setItem('visitorSource', referrer);
+        // Se o cookie 'visitorSource' não estiver definido, armazena a origem
+        if (!getCookie('visitorSource')) {
+            setCookie('visitorSource', referrer, 1); // O cookie expira em 1 dia
+        }
 
-        // Recupera a origem do sessionStorage
-        const visitorSource = sessionStorage.getItem('visitorSource');
+        // Recupera a origem do cookie
+        const visitorSource = getCookie('visitorSource');
 
         // Envia a origem para o backend
         fetch('https://backend-test-sable.vercel.app/api/count', {
@@ -25,11 +47,7 @@
             }
         })
         .then(response => response.json())
-        .then(data => {
-            console.log('Total de acessos:', data.accessList);
-            // Limpa a origem no sessionStorage após enviar para o backend
-            sessionStorage.removeItem('visitorSource');
-        })
+        .then(data => console.log('Total de acessos:', data.accessList))
         .catch(error => console.error('Erro:', error));
     </script>
 </body>
