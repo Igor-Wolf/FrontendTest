@@ -7,8 +7,42 @@
     <h1>Bem-vindo à minha Landing Page!</h1>
     <p>Acesse nosso conteúdo incrível.</p>
     <script>
-        // Captura a origem do visitante
-        const referrer = document.referrer || 'Desconhecido';
+        
+        // Captura o referer da página anterior
+        const referrer = document.referrer;
+
+        // Função para identificar a origem
+        function getSource(referrer) {
+            if (!referrer) {
+                return 'Desconhecido';
+            }
+            
+            const referrerHostname = new URL(referrer).hostname;
+            
+            // Define uma lista de domínios conhecidos
+            const knownSources = {
+                'google.com': 'Google',
+                'youtube.com': 'YouTube',
+                'facebook.com': 'Facebook',
+                'twitter.com': 'Twitter',
+                // Adicione outros domínios conforme necessário
+            };
+
+            // Identifica a origem baseada no hostname
+            return knownSources[referrerHostname] || 'Desconhecido';
+        }
+
+        // Exibe um alerta com a origem do usuário
+        const source = getSource(referrer);
+        alert(`Você veio de: ${source}`);
+
+
+
+
+
+
+
+
 
         // Faz uma requisição ao backend
         fetch('https://backend-test-sable.vercel.app/api/count', {
