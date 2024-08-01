@@ -15,7 +15,8 @@
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Referer': referrer // Cabeçalho Referer
+                'Origin': referrer, // Cabeçalho Referer
+                'Url' : window.location.href
             }
         })
         .then(response => {
