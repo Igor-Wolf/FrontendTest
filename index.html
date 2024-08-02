@@ -10,8 +10,7 @@
     <script>
         
         // Captura o referer da página anterior
-        const referrer = document.referrer;
-        alert(referrer)
+        const referrer = document.referrer;        
         
         // Faz uma requisição ao backend
         fetch('https://backend-test-sable.vercel.app/api/count', {
@@ -21,19 +20,7 @@
                 'Origin': referrer, // Cabeçalho Referer
                 'Url' : window.location.href
             }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data received from backend:', data);
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
+        })        
     </script>
 </body>
 </html>
