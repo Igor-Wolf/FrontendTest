@@ -4,11 +4,12 @@
     <title>Minha Landing Page</title>
     <meta name="referrer" content="unsafe-url">
 </head>
-<body>
+<br>
     <h1>Bem-vindo à minha Landing Page!</h1>
-    <p>Acesse nosso conteúdo incrível.</p>
+    <p>A quantidade de acessos às páginas de Igor Wolf são:</p></br>
+    <p id="count"></p>
     <script>
-        
+        const count = document.getElementById("count")
         // Captura o referer da página anterior
         const referrer = document.referrer;        
         
@@ -20,7 +21,21 @@
                 'Origin': referrer, // Cabeçalho Referer
                 'Url' : window.location.href
             }
-        })        
+        }) 
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            
+            count.innerHTML = JSON.stringify(data)
+            
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });       
     </script>
 </body>
 </html>
