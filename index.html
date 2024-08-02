@@ -29,8 +29,8 @@
             return response.json();
         })
         .then(data => {
-            
-            count.innerHTML = JSON.stringify(data)
+            const auxi = JSON.stringify(data)
+            count.innerHTML = auxi.accessCount
             
         })
         .catch(error => {
